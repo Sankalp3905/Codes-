@@ -1,0 +1,100 @@
+#include <iostream>
+using namespace std;
+
+struct node
+{
+    int data;
+    struct node *next;
+}*head=NULL,*ptr,*pre,*newnode;
+
+void insertAtBeg()
+{
+    int item;
+    cout<<"Enter the data to insert at beginning";
+    cin>>item;
+    newnode=(struct node *)malloc(sizeof(struct node));
+    newnode->data=item;
+    newnode->next=head;
+    head=newnode;
+    cout<<"Node inserted at beginning";
+}
+
+void deleteAtBeg()
+{
+    ptr=head;
+    if(ptr==NULL)
+    {
+        cout<<"List is empty, Deletion not possible";
+    }
+    else
+    {
+        
+        head=head->next;
+        free(ptr);
+        cout<<"Node deleted at beginning";
+    }
+}
+
+void display()
+{
+    ptr=head;
+    if(ptr==NULL)
+    {
+        cout<<"List is empty";
+    }
+    else
+    {
+        cout<<"The elements in the list are:";
+        while(ptr!=NULL)
+        {
+            cout<<ptr->data<<"\t";
+            ptr=ptr->next;
+        }
+    }
+}
+
+void count()
+{
+     ptr=head;
+     int count=0;
+    if(ptr==NULL)
+    {
+        cout<<"List is empty";
+    }
+    else
+    {
+    while(ptr!=NULL)
+    {
+        count++;
+        ptr=ptr->next;
+    }
+    cout<<"Count is";
+    cout<<"\t"<<count;
+}
+}
+
+int main()
+{
+    int choice;
+    do{
+    cout<<"\n 1. Insert element in List AT Begining.\n 2. Delete element in List AT Begining. \n 3. Display List. \n 4.Count number of element in List. \n 5.Exit.";
+    cout<<"\nEnter your choice";
+    cin>>choice;
+    switch(choice)
+    {
+        case 1:
+                insertAtBeg();
+                break;
+        case 2:
+                deleteAtBeg();
+                break;
+        case 3:
+                display();
+                break;
+        case 4:
+                count();
+                break;
+    }
+}while(choice!=5);
+return 0;
+}
