@@ -1,0 +1,80 @@
+#include <iostream>
+using namespace std;
+
+struct student
+{
+    int ID;
+    char Name[30];
+    float cgpa;
+
+}*s;
+
+int n;
+void getdata()
+{
+   cout<<"Enter the number of student";
+    cin>>n;
+    s=(struct student *)malloc(n*sizeof(struct student));
+    for(int i=0;i<n;i++)
+    {
+        cout<<"Enter ID,NAME,CGPA";
+        cin>>s[i].ID>>s[i].Name>>s[i].cgpa;
+    }
+}
+void display()
+{
+    cout<<"ID NAME CGPA";
+    for(int i=0;i<n;i++)
+    {
+        cout<<endl<<s[i].ID<<","<<s[i].Name<<","<<s[i].cgpa;
+    }
+}
+
+
+void SelectionSort()
+{
+    int i,j,m;
+    for(i=0;i<n-1;i++)
+    {
+        m=i;
+        for(j=i+1;j<n;j++)
+        {
+            if(s[j].cgpa<s[m].cgpa)
+            {
+                m=j;
+            }
+        }
+
+        if(m!=i)
+        {
+            struct student temp = s[i];
+            s[i]=s[m];
+            s[m]=temp;
+        }
+    }
+    cout<<"\n Student Records are sorted.....";
+    display();
+}
+
+int main()
+{
+    int choice;
+    do{
+        cout<<"\n 1.Add Student Record. \n 2.Display student record. \n3. Sort student record using Selection sort. \n 4.Exit.";
+        cout<<"Enter your choice.";
+        cin>>choice;
+        switch(choice)
+        {
+            case 1:
+                getdata();
+                break;
+            case 2:
+                display();
+                break;
+            case 3:
+                SelectionSort();
+                break;
+        }
+    }while(choice!=4);
+    return 0;
+}
