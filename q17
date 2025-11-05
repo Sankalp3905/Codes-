@@ -1,0 +1,70 @@
+# Program Title: Heap Sort (Non-Recursive)
+# Problem Statement: Implement Heap Sort using Max Heap (iterative heapify)
+
+class Heap:
+    def __init__(self):
+        self.arr = []   # list to store heap elements
+        self.n = 0      # number of elements in heap
+
+    # Iterative heapify function (non-recursive)
+    def heapify(self, n, i):
+        while True:
+            largest = i
+            left = 2 * i + 1
+            right = 2 * i + 2
+
+            # Find the largest among root, left child and right child
+            if left < n and self.arr[left] > self.arr[largest]:
+                largest = left
+            if right < n and self.arr[right] > self.arr[largest]:
+                largest = right
+
+            # If root is already the largest, stop
+            if largest == i:
+                break
+
+            # Swap and move down the tree
+            self.arr[i], self.arr[largest] = self.arr[largest], self.arr[i]
+            i = largest  # Continue heapifying down
+
+    # Insert elements into the heap
+    def insert(self, value):
+        self.arr.append(value)
+        self.n += 1
+
+    # Perform heap sort
+    def heap_sort(self):
+        n = self.n
+
+        # Step 1: Build a max heap
+        for i in range(n // 2 - 1, -1, -1):
+            self.heapify(n, i)
+
+        # Step 2: Extract elements one by one
+        for i in range(n - 1, 0, -1):
+            # Swap current root with the end
+            self.arr[0], self.arr[i] = self.arr[i], self.arr[0]
+            # Heapify the reduced heap (non-recursive)
+            self.heapify(i, 0)
+
+    # Display array elements
+    def display(self):
+        print(self.arr)
+
+
+# ---- Main Function ----
+if __name__ == "__main__":
+    h = Heap()
+    num = int(input("Enter number of elements: "))
+
+    for i in range(num):
+        val = int(input(f"Enter element {i+1}: "))
+        h.insert(val)
+
+    print("\nBefore sorting (Original array):")
+    h.display()
+
+    h.heap_sort()
+
+    print("\nAfter sorting (Ascending order):")
+    h.display()
