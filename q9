@@ -1,0 +1,98 @@
+#include <iostream>
+using namespace std;
+
+#define N 5
+class CircularQueue
+{
+	int queue[N];
+	int rear,front;
+
+	public:
+		CircularQueue()
+		{
+			front=rear=-1;
+		}
+	void enqueue(int value)
+	{
+		if((rear+1)% N==front)
+		{
+			cout<<"Queue is Full0";
+		}
+		else
+		{
+			if(front=-1) front=0;
+			rear=(rear+1)%N;
+			queue[rear]=value;
+			cout<<"\n Inserted"<< value;
+		}
+	}
+	void dequeue()
+	{
+		if(front==-1)
+		{
+			cout<<"Queue is empty";
+		}
+		else
+		{
+			cout<<"\n deleted "<< queue[front];
+			if(rear==front) 
+			{
+				rear=front=-1;
+			}
+			else
+			{
+				front=(front+1)%N;
+			}
+		}
+	}
+
+	void display()
+	{
+		if(front==-1)
+		{
+			cout<<"empty";
+		}
+		else
+		{
+			cout<<"Queue element are:";
+			int i=front;
+			while(true)
+			{
+				cout<<queue[i] <<" ";
+				if(i==rear) break;
+				i=(i+1)%N;
+			}
+		}
+	}
+};
+int main() {
+    CircularQueue q;
+    int choice, value;
+
+    do {
+        cout << "\n\n1. Enqueue\n2. Dequeue\n3. Display\n4. Exit";
+        cout << "\nEnter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+        case 1:
+            cout << "Enter value: ";
+            cin >> value;
+            q.enqueue(value);
+            break;
+        case 2:
+            q.dequeue();
+            break;
+        case 3:
+            q.display();
+            break;
+        case 4:
+            cout << "\nExiting...";
+            break;
+        default:
+            cout << "\nInvalid choice!";
+        }
+    } while (choice != 4);
+
+    return 0;
+}
