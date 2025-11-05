@@ -1,0 +1,119 @@
+#include <iostream>
+using namespace std;
+
+struct student
+{
+    int ID;
+    char Name[30];
+    float cgpa;
+}*s;
+  int n;
+
+void getdata()
+{
+    cout<<"Enter the Number of Student";
+    cin>>n;
+    s=(struct student *)malloc(n*sizeof(struct student));
+    for(int i=0;i<n;i++)
+    {
+        cin>>s[i].ID>>s[i].Name>>s[i].cgpa;
+    }
+}
+
+void display()
+{
+   cout<<"Student Details";
+    for(int i=0;i<n;i++)
+    {
+        cout<<endl<<s[i].ID<<s[i].Name<<s[i].cgpa;
+    }
+}
+
+void LinearSearch(int keyId)
+{
+    int i;
+    for(i=0;i<n;i++)
+    {
+        if(s[i].ID==keyId)
+        {
+            cout<<"Student Record is Found...!!!";
+            cout<<"\n"<<s[i].ID<<"\t"<<s[i].Name<<"\t"<<s[i].cgpa;
+            break;
+        }
+    }
+
+    if(i==n)
+    {
+        cout<<"Student Record is not found";
+    }
+}
+
+void BinarySearch(int KeyId)
+{
+    int left=0, right=n-1,mid,flag=0;
+    while(left<=right)
+    {
+        mid=(left+right)/2;
+        if(KeyId==s[mid].ID)
+        {
+            flag=1;
+            break;
+        }
+        else if(KeyId<s[mid].ID)
+        {
+            right=mid-1;
+        }
+        else
+        {
+            left=mid+1;
+        }
+
+    }
+    if(flag==1)
+    {
+        cout<<"Student Record is Found...!!!";
+        cout<<"\n"<<s[mid].ID<<"\t"<<s[mid].Name<<"\t"<<s[mid].cgpa;
+    }
+    else
+    {
+        cout<<"Student Record is not found";
+    }
+
+}
+
+int main()
+  {
+  	int choice,keyid;
+  	
+  	do
+  	{
+  		cout<<"\n 1. Add Student Record. \n 2.Display Student Record. \n 3. Search by ID using Linear search.\n 4. Search by ID using Binary search. \n Exit.";
+  		
+  		cout<<"Enter your Choice.";
+  		cin>>choice;
+  		switch(choice)
+  		{
+  			case 1:
+  				getdata();
+  				break;
+  			
+  			case 2:
+  				display();
+  				break;
+  			
+  			case 3: 
+  				cout<<"\n Enter key Id to Linear Search";
+  				cin>>keyid;
+  				LinearSearch( keyid);
+  				break;
+  			case 4:
+  				cout<<"\n Enter key Id to for Binary Search";
+  				cin>>keyid;
+  				BinarySearch(keyid);
+  				break;
+  		}
+  		}while(choice!=5);
+  	return 0;
+  	}
+
+
