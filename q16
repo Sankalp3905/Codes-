@@ -1,0 +1,57 @@
+HIGH = 9999999
+
+class Graph:
+    def __init__(self):
+        self.n = 0
+        self.g = []
+        self.dept = []
+
+    def initialize(self):
+        self.n = int(input("Enter the number of Departments: "))
+        print("Enter the department names:")
+        for i in range(self.n):
+            name = input(f"Department {i+1}: ")
+            self.dept.append(name)
+
+        # Create adjacency matrix
+        self.g = [[0] * self.n for _ in range(self.n)]
+
+        print("\nEnter the distance between departments (0 if no direct connection):")
+        for i in range(self.n):
+            for j in range(self.n):
+                self.g[i][j] = int(input(f"Distance between {self.dept[i]} and {self.dept[j]}: "))
+
+    def prims(self):
+        selected = [False] * self.n
+        no_edge = 0
+        selected[0] = True  # Start from the first node
+
+        print("\nMinimum Spanning Tree using Prim's Algorithm:")
+        total = 0
+
+        while no_edge < self.n - 1:
+            minimum = HIGH
+            x = 0
+            y = 0
+
+            for i in range(self.n):
+                if selected[i]:
+                    for j in range(self.n):
+                        if (not selected[j]) and self.g[i][j] != 0:
+                            if minimum > self.g[i][j]:
+                                minimum = self.g[i][j]
+                                x = i
+                                y = j
+
+            print(f"{self.dept[x]} - {self.dept[y]} : {self.g[x][y]}")
+            total += self.g[x][y]
+            selected[y] = True
+            no_edge += 1
+
+        print(f"Total Minimum Distance: {total}")
+
+
+# --- Main program ---
+g = Graph()
+g.initialize()
+g.prims()
