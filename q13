@@ -1,0 +1,110 @@
+class node :
+    def __init__(self,data):
+        self.data=data
+        self.left=None
+        self.right=None
+
+class BST:
+    def __init__(self):
+        self.root=None
+
+    def createbst(self,x):
+        newnode=node(x)
+        if self.root is None:
+            self.root=newnode
+            return
+
+        ptr=self.root
+        parent=None
+        while ptr is not None:
+            parent=ptr
+            if x>ptr.data:
+                ptr=ptr.right
+            else :
+                ptr=ptr.left
+
+        if x>parent.data :
+            parent.right=newnode
+        else :
+            parent.left=newnode
+
+    def search(self,x):
+        if self.root is None:
+            print("Tree is Empty")
+            return
+        
+        ptr=self.root
+        while ptr is not None :
+            if x==ptr.data:
+                print(f"{x} is Found in tree")
+                return
+            elif x>ptr.data:
+                ptr=ptr.right
+            else :
+                ptr=ptr.left 
+        print(f"{x} is not found in tree")
+
+    def copy_bst(self,node_ptr):
+        if node_ptr is None:
+            return None
+        new_node=node(node_ptr.data)
+        new_node.left=self.copy_bst(node_ptr.left)
+        new_node.right=self.copy_bst(node_ptr.right)
+        return new_node
+    
+    def depth(self,ptr):
+        if ptr is None:
+            return 0
+        lh = self.depth(ptr.left)
+        rh = self.depth(ptr.right)
+        return max(lh, rh) + 1
+    
+    def inorder(self,ptr):
+        if ptr is not None:
+            self.inorder(ptr.left)
+            print(ptr.data,end=" ")
+            self.inorder(ptr.right)
+
+def main():
+    t=BST()
+    while True:
+        print("\n 1. Insert")
+        print(" 2. Search")
+        print(" 3. Copy BST")
+        print(" 4. Find Depth Of tree")
+        print(" 5. Exit")
+
+        ch=int(input("Enter your choice : "))
+
+        if ch == 1:
+            x=int(input("Enter the data to insert: "))
+            t.createbst(x)
+        
+        elif ch ==2:
+            x=int(input("Enter the data to insert: "))
+            t.search(x)
+        
+        elif ch== 3:
+            print("Copy Of BST : ", end=" ")
+            copy=BST()
+            copy.root=t.copy_bst(t.root)
+            print("created")
+            print("Inorder Traversal of Copy BST : ", end=" ")
+            copy.inorder(copy.root)
+        
+        elif ch == 4:
+            d=t.depth(t.root)
+            print("Depth of Tree : ", d)
+        
+        elif ch == 5:
+            print("Existingg.......")
+            break;
+
+        else :
+            print("Invalid choice....")
+
+
+if __name__=="__main__":
+    main()
+
+    
