@@ -1,0 +1,69 @@
+# Program for Maze Navigation System using A* Algorithm
+import heapq
+
+# Define directions (up, down, left, right)
+directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+
+# Heuristic function: Manhattan distance
+def heuristic(a, b):
+    return abs(a[0] - b[0]) + abs(a[1] - b[1])
+
+def astar(maze, start, goal):
+    rows, cols = len(maze), len(maze[0])
+    open_list = []  # priority queue
+    heapq.heappush(open_list, (0, start))  # (f = g + h, node)
+
+    came_from = {}  # to reconstruct path
+    g_score = {start: 0}  # cost from start to node
+
+    visited_order = []  # to track visiting order
+
+    while open_list:
+        current_f, current = heapq.heappop(open_list)
+
+        # Goal reached
+        if current == goal:
+            path = []
+            while current in came_from:
+                path.append(current)
+                current = came_from[current]
+            path.append(start)
+            path.reverse()
+            return path, visited_order
+
+        visited_order.append(current)
+
+        for dr, dc in directions:
+            nr, nc = current[0] + dr, current[1] + dc
+            neighbor = (nr, nc)
+
+            # check valid and walkable
+            if 0 <= nr < rows and 0 <= nc < cols and maze[nr][nc] == 0:
+                tentative_g = g_score[current] + 1
+
+                if tentative_g < g_score.get(neighbor, float('inf')):
+                    came_from[neighbor] = current
+                    g_score[neighbor] = tentative_g
+                    f = tentative_g + heuristic(neighbor, goal)
+                    heapq.heappush(open_list, (f, neighbor))
+
+    return None, visited_order  # no path found
+
+# --- Example Maze (0 = open, 1 = wall) ---
+maze = [
+    [0, 1, 0, 0, 0],
+    [0, 1, 0, 1, 0],
+    [0, 0, 0, 1, 0],
+    [1, 1, 0, 0, 0],
+]
+
+start = (0, 0)
+goal = (3, 4)
+
+path, visited = astar(maze, start, goal)
+
+print("Visited Order:", visited)
+if path:
+    print("Shortest Path Found:", path)
+else:
+    print("No Path Found")
