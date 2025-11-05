@@ -1,0 +1,123 @@
+#include <iostream>
+using namespace std;
+
+struct node
+{
+    int data;
+    struct node *next;
+}*head=NULL,*ptr,*pre,*newnode;
+
+void insertAtLast()
+{
+    int item;
+    newnode=(struct node*)malloc(sizeof(struct node));
+    cout<<"Enter the list element value";
+    cin>>item;
+    newnode->data=item;
+    
+    if(head==NULL)
+    {
+        newnode->next=head;
+        head=newnode;
+    }
+    else
+    {
+        ptr=head;
+        while(ptr->next!=NULL)
+        {
+            ptr=ptr->next;
+        }
+        ptr->next=newnode;
+        newnode->next=NULL;
+    }
+}
+
+void deleteAtLast()
+{
+    ptr=head;
+    if(ptr==NULL)
+    {
+        cout<<"List is empty.";
+    }
+    else
+    {
+        while (ptr->next!=NULL)
+        {
+            pre=ptr;
+            ptr=ptr->next;
+        }
+        pre->next=NULL;
+        free(ptr);
+        cout<<"Record is deleted0";
+    }
+}
+
+void display()
+{
+    ptr=head;
+    if(ptr==NULL)
+    {
+        cout<<"List is Empty";
+    }
+    else
+    {
+        cout<<"The elements in the list are:";
+        while(ptr!=NULL)
+        {
+            cout<<ptr->data<<"\t";
+            ptr=ptr->next;
+        }
+    }
+}
+
+void search()
+{
+    int key,i=0;
+    cout<<"Enter the value you want to search";
+    cin>>key;
+    ptr=head;
+    while(ptr!=NULL)
+    {
+        i++;
+        if(ptr->data==key)
+        {
+            cout<<"\nELement found at"<<i<<"location";
+            break;
+       }
+        else
+        {
+            ptr=ptr->next;
+        }
+    }  
+    if(ptr==NULL)
+    {
+        cout<<"\n Data is not found";
+    }
+}
+
+int main()
+{
+    int choice;
+    do{
+    cout<<"\n 1. Insert element in List AT End.\n 2. Delete element in List AT End. \n 3. Display List. \n 4.Search element in List. \n 5.Exit.";
+    cout<<"\nEnter your choice";
+    cin>>choice;
+    switch(choice)
+    {
+        case 1:
+                insertAtLast();
+                break;
+        case 2:
+                deleteAtLast();
+                break;
+        case 3:
+                display();
+                break;
+        case 4:
+                search();
+                break;
+    }
+}while(choice!=5);
+return 0;
+
+}
