@@ -1,0 +1,87 @@
+#include <iostream>
+using namespace std;
+
+struct student
+{
+    int ID;
+    char Name[30];
+    float cgpa;
+}*s;
+
+int n;
+
+void getData()
+{
+    cout<<"ENter the number of student";
+    cin>>n;
+    s=(struct student *)malloc(n*sizeof(struct student));
+    for(int i=0;i<n;i++)
+    {
+        cout<<"Enter ID,NAME,CGPA";
+        cin>>s[i].ID>>s[i].Name>>s[i].cgpa;
+    }
+}
+
+void display()
+{
+    cout<<"ID NAME CGPA";
+    for(int i=0;i<n;i++)
+    {
+        cout<<endl<<s[i].ID<<","<<s[i].Name<<","<<s[i].cgpa;
+    }
+}
+
+void expandStudent()
+{
+    s=(struct student *)realloc(s,(n+1)*sizeof(struct student));
+    cout<<"Enter ID,NAME,CGPA";
+    cin>>s[n].ID>>s[n].Name>>s[n].cgpa;
+    cout<<"Student record is Addded...";
+    n++;
+}
+
+void LinearSearch(int keyid)
+{
+    int i;
+    for(int i=0;i<n;i++)
+    {
+        if(s[i].ID==keyid)
+        {
+            cout<<"Student recored is Found.....!!";
+            cout<<"\n"<<s[i].ID<<"\t"<<s[i].Name<<"\t"<<s[i].cgpa;
+            break;
+        }
+    }
+
+    if(i==n)
+    {
+        cout<<"Student record is not found...!!";
+    }
+}
+
+int main()
+{
+    int choice,keyid;
+    do{
+        cout<<"\n1.Get Data\n2.Display\n3.Add Student\n4.Linear Search\n5.Exit";
+        cout<<"\nEnter your choice";
+        cin>>choice;
+        switch(choice)
+        {
+            case 1:
+                getData();
+                break;
+            case 2:
+                display();
+                break;
+            case 3:
+                expandStudent();
+                break;
+            case 4:
+                cout<<"Enter the key id to be searched";
+                cin>>keyid;
+                LinearSearch(keyid);
+                break;
+        }
+    }while(choice!=5);
+}
