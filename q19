@@ -1,0 +1,43 @@
+'''You run a shipping company and need to load a truck with parcels of different weights 
+and profits. The truck has a limited weight capacity. Write a program to choose parcels 
+(even partially) to maximize profit using the Fractional Knapsack strategy. (Python)'''
+
+n=int(input("ENter the number of parcel: "))
+
+weights=[]
+profits=[]
+
+for i in range (n):
+    w=float(input(f"\n Enter the Weight of parcel {i+1} : "))
+    p=float(input(f"\n Enter the Profit of parcel {i+1} : "))
+
+    if w >0:
+        weights.append(w)
+        profits.append(p)
+    else:
+        print("Weight can't be zero")
+        n=n-1
+
+capacity=float(input("Enter the truct Capacity: "))
+items=[]
+
+for i in range (n):
+    ratio=profits[i]/weights[i]
+    items.append([ratio,weights[i],profits[i]])
+
+items.sort(reverse=True)
+
+total_profit=0.0
+for ratio , w ,p in items:
+    if capacity==0:
+            break
+    if w<=capacity:
+            total_profit+=p
+            capacity-=w
+            print(f"Added {w} weight to the bag")
+    else :
+        print(f"Added {capacity} weight to the bag(partially)")
+        total_profit+=ratio*capacity
+        capacity=0
+
+print("Total Profit is: ", total_profit)
